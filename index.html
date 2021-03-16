@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+        body {
+            background-color: #111;
+            color: #ddd;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+        .messagebox {
+            background-color: #222;
+            border-radius: 5px;
+            border-left: #555;
+        }
+        .message {
+            display: initial;
+        }
+    </style>
+    <script type="text/javascript" src="discord.11.1.0.min.js"></script>
+    <script type="text/javascript">
+
+    const Discord = require('discord.js');
+    const client = new Discord.Client();
+
+    function sanitizemsg(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
+    }
+
+    client.on('ready', () => {
+        alert(`Logged in as ${client.user.tag}!`);
+    });
+
+    client.on('message', msg => {
+        console.log(`#${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
+
+        var newmsg = document.createElement(`div`);
+        var msgtext = document.createElement(`p`);
+        var msgauthor = document.createElement(`p`);
+        var chatbox = document.getElementById('chatbox');
+        chatbox.appendChild(newmsg);
+        newmsg.appendChild(msgauthor);
+        newmsg.appendChild(msgtext);
+
+        msgtext.innerHTML = sanitizemsg(`${msg.content}`);
+        msgauthor.innerHTML = `${msg.author.tag} in #${msg.channel.name}`;
+        newmsg.classList.add("messagebox");
+        msgtext.classList.add("message");
+    });
+
+
+    function loginClient() {
+        var token = document.getElementById("tokenarea").value;
+        client.login(token);
+    }
+
+    </script>
+</head>
+<body>
+    <textarea id="tokenarea"></textarea>
+    <button id="loginbutton" onclick="loginClient()">Login</button>
+    <div id="chatbox">
+        <br id="chatafter" />
+    </div>
+</body>
+</html>
