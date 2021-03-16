@@ -15,9 +15,25 @@
             background-color: #222;
             border-radius: 5px;
             border-left: #555;
+            padding: 5px;
         }
-        .message {
-            display: initial;
+        #loginbox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 40%;
+        }
+        #tokenarea {
+            display: block;
+            width: 100%;
+            resize: none;
+        }
+        #tokenarea:focus {
+            outline: none;
+        }
+        #loginButton {
+            display: inline-block;
         }
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
@@ -31,37 +47,43 @@
     }
 
     client.on('ready', () => {
-        alert(`Logged in as ${client.user.tag}!`);
+        var chatbox = document.getElementById('chatbox');
+        var loginnotif = document.createElement(`p`);
+        chatbox.appendChild(loginnotif);
+        loginnotif.innerHTML = `Running as ${client.user.tag}.`;
     });
 
     client.on('message', msg => {
         console.log(`#${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
 
         var newmsg = document.createElement(`div`);
-        var msgtext = document.createElement(`p`);
-        var msgauthor = document.createElement(`p`);
+        var msginner = document.createElement(`p`);
         var chatbox = document.getElementById('chatbox');
         chatbox.appendChild(newmsg);
-        newmsg.appendChild(msgauthor);
-        newmsg.appendChild(msgtext);
+        newmsg.appendChild(msginner);
 
-        msgtext.innerHTML = sanitizemsg(`${msg.content}`);
-        msgauthor.innerHTML = `${msg.author.tag} in #${msg.channel.name}`;
+        msginner.innerHTML = `${msg.author.tag} in #${msg.channel.name} said ${sanitizemsg(`${msg.content}`)}`;
         newmsg.classList.add("messagebox");
-        msgtext.classList.add("message");
     });
 
 
     function loginClient() {
-        var token = document.getElementById("tokenarea").value;
-        client.login(token);
+        if (!document.getElementById("tokenarea").value) {
+            return;
+        } else {
+            var token = document.getElementById("tokenarea").value;
+            client.login(token);
+            document.getElementById("loginbox").style.display = 'none';
+        }
     }
 
     </script>
 </head>
 <body>
-    <textarea id="tokenarea"></textarea>
-    <button id="loginbutton" onclick="loginClient()">Login</button>
+    <div id="loginbox">
+    <textarea id="tokenarea" rows="1"></textarea>
+    <button id="loginButton" onclick="loginClient()">Login</button>
+    </div>
     <div id="chatbox">
         <br id="chatafter" />
     </div>
