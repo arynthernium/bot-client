@@ -15,7 +15,15 @@
             background-color: #222;
             border-radius: 5px;
             border-left: #555;
-            padding: 5px;
+        }
+        .messagebox > p {
+            padding: 2px;
+            word-wrap: break-word;
+        }
+        .errorbox {
+            background-color: rgba(220, 53, 69, 0.2);
+            border-radius: 5px;
+            border: 1px solid #dc3545;
         }
         #loginbox {
             position: absolute;
@@ -35,6 +43,20 @@
         #loginButton {
             display: inline-block;
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #353535;
+        }
+
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
     <script type="text/javascript">
@@ -66,6 +88,27 @@
         newmsg.classList.add("messagebox");
     });
 
+    
+    window.addEventListener("error", function (err) {
+        var newmsg = document.createElement(`div`);
+        var msginner = document.createElement(`p`);
+        var chatbox = document.getElementById('chatbox');
+        chatbox.appendChild(newmsg);
+        newmsg.appendChild(msginner);
+
+        msginner.innerHTML = err.error.message;
+        newmsg.classList.add("errorbox");
+    })
+    window.addEventListener('unhandledrejection', function (err) {
+        var newmsg = document.createElement(`div`);
+        var msginner = document.createElement(`p`);
+        var chatbox = document.getElementById('chatbox');
+        chatbox.appendChild(newmsg);
+        newmsg.appendChild(msginner);
+
+        msginner.innerHTML = err.reason.message;
+        newmsg.classList.add("errorbox");
+    })
 
     function loginClient() {
         if (!document.getElementById("tokenarea").value) {
