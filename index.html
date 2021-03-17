@@ -103,6 +103,24 @@
         *:focus {
             outline: none;
         }
+        #eventbox {
+            border: 2px solid #555;
+            width: 38%;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            background-color: #333;
+        }
+        #eventbox > p {
+            padding: 2px;
+            word-wrap: break-word;
+        }
+        .errorbox {
+            background-color: rgba(220, 53, 69, 0.2);
+            border-radius: 5px;
+            border: 1px solid #dc3545;
+        }
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
     <script type="text/javascript">
@@ -155,27 +173,43 @@
         msginner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
         newmsg.classList.add("messagebox");
     });
+    client.on('message', msg => {
+        //SECONDARY
+        //FOR CALLOUTS
+        if (msg.content.startsWith('.')) {
+            console.log(`Command: #${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
+
+            var newevent = document.createElement(`div`);
+            var eventinner = document.createElement(`p`);
+            var eventbox = document.getElementById('eventbox');
+            eventbox.appendChild(newevent);
+            newevent.appendChild(eventinner);
+
+            eventinner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
+            newevent.classList.add("event");
+        }
+    })
 
     
     window.addEventListener("error", function (err) {
-        var newmsg = document.createElement(`div`);
-        var msginner = document.createElement(`p`);
-        var chatbox = document.getElementById('chatbox');
-        chatbox.appendChild(newmsg);
-        newmsg.appendChild(msginner);
+        var newevent = document.createElement(`div`);
+        var eventinner = document.createElement(`p`);
+        var eventbox = document.getElementById('eventbox');
+        eventbox.appendChild(newevent);
+        newevent.appendChild(eventinner);
 
-        msginner.innerHTML = err.error.message;
-        newmsg.classList.add("errorbox");
+        eventinner.innerHTML = err.error.message;
+        newevent.classList.add("errorbox");
     })
     window.addEventListener('unhandledrejection', function (err) {
-        var newmsg = document.createElement(`div`);
-        var msginner = document.createElement(`p`);
-        var chatbox = document.getElementById('chatbox');
-        chatbox.appendChild(newmsg);
-        newmsg.appendChild(msginner);
+        var newevent = document.createElement(`div`);
+        var eventinner = document.createElement(`p`);
+        var eventbox = document.getElementById('eventbox');
+        eventbox.appendChild(newevent);
+        newevent.appendChild(eventinner);
 
-        msginner.innerHTML = err.reason.message;
-        newmsg.classList.add("errorbox");
+        eventinner.innerHTML = err.reason.message;
+        newevent.classList.add("errorbox");
     })
 
     function loginClient() {
@@ -218,6 +252,9 @@
             <option value="" disabled selected>Select a channel</option>
         </select>
         <button id="sendButton" onclick="sendMessage()">Send</button>
+    </div>
+    <div id="eventbox">
+
     </div>
 </body>
 </html>
