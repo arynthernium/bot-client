@@ -17,3 +17,5 @@ cd bot-client
 npm i
 npm run make
 ```
+These commands are platform-independent, the program will be built for the host platform.
+For linux releases, I've used [makeself](https://github.com/megastep/makeself) to create the single-file release.
