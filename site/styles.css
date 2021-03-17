@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+
+body {
+    background: #111;
+    color: #ddd;
+    font-family: 'Ubuntu Mono', monospace;
+    text-align: center;
+}
+.main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+a {
+    color: #ccc;
+}
+a:hover {
+    color: #aaa;
+}

@@ -56,7 +56,25 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #353535;
         }
-
+        #channelSelect, #messagearea, #sendButton {
+            display: none;
+        }
+        footer{
+            left: 0;
+            width: 100%;
+            bottom: 0;
+            position: fixed;
+        }
+        footer > textarea {
+            resize: none;
+        }
+        footer > textarea:focus, footer > select:focus {
+            outline: none;
+        }
+        option, footer > textarea, #sendButton, #channelSelect {
+            background-color: #131313;
+            color: #ddd;
+        }
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
     <script type="text/javascript">
@@ -73,6 +91,28 @@
         var loginnotif = document.createElement(`p`);
         chatbox.appendChild(loginnotif);
         loginnotif.innerHTML = `Running as ${client.user.tag}.`;
+        
+        document.getElementById("channelSelect").style.display = 'initial';
+        document.getElementById("messagearea").style.display = 'initial';
+        document.getElementById("sendButton").style.display = 'initial';
+
+        client.channels.cache.forEach(channel => { 
+        var optiontag = document.createElement(`option`);
+        var channelSelect = document.getElementById('channelSelect');
+        channelSelect.appendChild(optiontag);
+        optiontag.value = channel.id;
+        if (channel.guild.name.length > 15) {
+            var guildname = channel.guild.name.slice(0, 15)+'...';
+        } else {
+            var guildname = channel.guild.name;
+        }
+        if (channel.name.length > 15) {
+            var channelname = channel.guild.name.slice(0, 15)+'...';
+        } else {
+            var channelname = channel.name;
+        }
+        optiontag.innerHTML = `${guildname} - #${channelname}`;
+    });
     });
 
     client.on('message', msg => {
@@ -120,6 +160,20 @@
         }
     }
 
+    function sendMessage() {
+        if (document.getElementById("channelSelect").value == "") { return false; }
+        client.channels.cache.get(`${document.getElementById("channelSelect").value}`).send(`${document.getElementById("messagearea").value}`);
+        console.log(`Sending ${document.getElementById("messagearea").value}`);
+        document.getElementById("messagearea").value = "";
+    };
+
+    var messagearea = document.getElementById("messagearea");
+    function sendMessageCheck() {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            sendMessage()
+        };
+    };
     </script>
 </head>
 <body>
@@ -130,5 +184,12 @@
     <div id="chatbox">
         <br id="chatafter" />
     </div>
+    <footer>
+        <select id="channelSelect">
+            <option value="" disabled selected>Select a channel</option>
+        </select>
+        <textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
+        <button id="sendButton" onclick="sendMessage()">Send</button>
+    </footer>
 </body>
 </html>
