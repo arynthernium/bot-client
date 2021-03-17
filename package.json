@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.1.4",
+  "version": "1.2.6",
   "description": "A client to connect and chat as a bot account.",
   "main": "main.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "keywords": [
     "bot",
     "discord",
-    "dashboard"
+    "client"
   ],
   "author": "aryn",
   "license": "ISC",
@@ -34,7 +34,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "dashboard"
+            "name": "client"
           }
         },
         {
@@ -45,11 +45,17 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {},
+          "platforms": [
+            "linux"
+          ]
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {},
+          "platforms": [
+            "linux"
+          ]
         }
       ]
     }
