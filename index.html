@@ -7,7 +7,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
         body {
-            background-color: #111;
+            background-color: #2C2F33;
             color: #ddd;
             font-family: 'Ubuntu Mono', monospace;
         }
@@ -48,7 +48,7 @@
             width: 10px;
         }
         ::-webkit-scrollbar-track {
-            background: #111;
+            background: #2C2F33;
         }
         ::-webkit-scrollbar-thumb {
             background: #333;
@@ -66,7 +66,7 @@
             outline: none;
         }
         option, #messagefooterbox > textarea, #sendButton, #channelSelect {
-            background-color: #131313;
+            background-color: #2C2F33;
             color: #ddd;
         }
         .messagefooterbox {
@@ -80,8 +80,17 @@
             flex-grow: 1;
             resize: none;
             outline: none;
-            background-color: #131313;
+            background-color: #2C2F33;
             color: #ddd;
+            height: 30px;
+        }
+        #channelSelect {
+            height: 35px;
+            border-radius: 10px 0px 0px 10px;
+        }
+        #sendButton {
+            height: 35px;
+            border-radius: 0px 10px 10px 0px;
         }
         *:focus {
             outline: none;
