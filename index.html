@@ -76,6 +76,7 @@
             position: absolute;
             bottom: 0;
             left: 0;
+            margin: 1%;
         }
         #messagearea {
             flex-grow: 2;
@@ -104,22 +105,19 @@
             outline: none;
         }
         #eventbox {
-            border: 2px solid #555;
+            border: 2px solid #fa0;
             width: 38%;
             position: absolute;
             right: 0;
             top: 0;
-            height: 100%;
-            background-color: #333;
+            height: 90%;
+            background-color: #2C2F33;
+            display: none;
+            margin: 1%
         }
         #eventbox > p {
             padding: 2px;
             word-wrap: break-word;
-        }
-        .errorbox {
-            background-color: rgba(220, 53, 69, 0.2);
-            border-radius: 5px;
-            border: 1px solid #dc3545;
         }
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
@@ -141,6 +139,7 @@
         document.getElementById("channelSelect").style.display = 'flex';
         document.getElementById("messagearea").style.display = 'flex';
         document.getElementById("sendButton").style.display = 'flex';
+        document.getElementById("eventbox").style.display = 'initial';
 
         client.channels.cache.forEach(channel => { 
         var optiontag = document.createElement(`option`);
