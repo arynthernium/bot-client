@@ -70,13 +70,16 @@
             color: #ddd;
         }
         .messagefooterbox {
-            width: 60%;
+            width: 98%;
+            margin: auto;
             height: 5%;
             display: flex;
             position: absolute;
             bottom: 0;
             left: 0;
-            margin: 1%;
+            right: 0;
+            margin: auto;
+            margin-bottom: 1%;
         }
         #messagearea {
             flex-grow: 2;
@@ -172,9 +175,17 @@
         msginner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
         newmsg.classList.add("messagebox");
     });
+
+    client.commands = new Discord.Collection();
+    const clientCommands = require('./commands');
+    
+    Object.keys(clientCommands).map(key => {
+      client.commands.set(clientCommands[key].name, clientCommands[key]);
+    });
+
     client.on('message', msg => {
         //SECONDARY
-        //FOR CALLOUTS
+        //event handler, calls command handler
         if (msg.content.startsWith('.')) {
             console.log(`Command: #${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
 
@@ -186,6 +197,13 @@
 
             eventinner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
             newevent.classList.add("event");
+
+            try {
+              client.commands.get(command).execute(msg, args, client);
+            } catch (error) {
+              console.error(error);
+              msg.channel.send('https://stuff.aryn.dev/error.gif');
+            }
         }
     })
 
