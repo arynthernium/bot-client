@@ -12,8 +12,9 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-a {
+a, p {
     color: #ccc;
+    display: inline;
 }
 a:hover {
     color: #aaa;
