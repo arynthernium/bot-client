@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Discord Bot Client</title>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
@@ -59,21 +59,32 @@
         #channelSelect, #messagearea, #sendButton {
             display: none;
         }
-        footer{
-            left: 0;
-            width: 100%;
-            bottom: 0;
-            position: fixed;
-        }
-        footer > textarea {
+        #messagefooterbox > textarea {
             resize: none;
         }
-        footer > textarea:focus, footer > select:focus {
+        #messagefooterbox > textarea:focus, #messagefooterbox > select:focus {
             outline: none;
         }
-        option, footer > textarea, #sendButton, #channelSelect {
+        option, #messagefooterbox > textarea, #sendButton, #channelSelect {
             background-color: #131313;
             color: #ddd;
+        }
+        .messagefooterbox {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+        }
+        #messagearea {
+            flex-grow: 1;
+            resize: none;
+            outline: none;
+            background-color: #131313;
+            color: #ddd;
+        }
+        *:focus {
+            outline: none;
         }
     </style>
     <script type="text/javascript" src="discord.11.1.0.min.js"></script>
@@ -184,12 +195,12 @@
     <div id="chatbox">
         <br id="chatafter" />
     </div>
-    <footer>
+    <div class="messagefooterbox">
         <select id="channelSelect">
             <option value="" disabled selected>Select a channel</option>
         </select>
         <textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
         <button id="sendButton" onclick="sendMessage()">Send</button>
-    </footer>
+    </div>
 </body>
 </html>
