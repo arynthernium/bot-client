@@ -183,6 +183,16 @@
       client.commands.set(clientCommands[key].name, clientCommands[key]);
     });
 
+    function eventOut(message) {
+        var newevent = document.createElement(`div`);
+        var eventinner = document.createElement(`p`);
+        var eventbox = document.getElementById('eventbox');
+        eventbox.appendChild(newevent);
+        newevent.appendChild(eventinner);
+        eventinner.innerHTML = `(Self) Out: ${message}`;
+        newevent.classList.add("event");
+    }
+
     client.on('message', msg => {
         //SECONDARY
         //event handler, calls command handler
