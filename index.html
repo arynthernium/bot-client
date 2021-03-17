@@ -70,27 +70,35 @@
             color: #ddd;
         }
         .messagefooterbox {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
+            width: 60%;
+            height: 5%;
             display: flex;
+            position: absolute;
+            bottom: 0;
+            left: 0;
         }
         #messagearea {
-            flex-grow: 1;
+            flex-grow: 2;
             resize: none;
             outline: none;
             background-color: #2C2F33;
             color: #ddd;
-            height: 30px;
+            display: none;
+            border-radius: 10px 0px 0px 10px;
+            align-self: left;
         }
         #channelSelect {
-            height: 35px;
-            border-radius: 10px 0px 0px 10px;
+            flex-grow: 2;
+            border-radius: 0px;
+            display: none;
+            align-self: center;
+            height: 100%;
         }
         #sendButton {
-            height: 35px;
+            flex-grow: 1;
             border-radius: 0px 10px 10px 0px;
+            display: none;
+            align-self: right;
         }
         *:focus {
             outline: none;
@@ -112,9 +120,9 @@
         chatbox.appendChild(loginnotif);
         loginnotif.innerHTML = `Running as ${client.user.tag}.`;
         
-        document.getElementById("channelSelect").style.display = 'initial';
-        document.getElementById("messagearea").style.display = 'initial';
-        document.getElementById("sendButton").style.display = 'initial';
+        document.getElementById("channelSelect").style.display = 'flex';
+        document.getElementById("messagearea").style.display = 'flex';
+        document.getElementById("sendButton").style.display = 'flex';
 
         client.channels.cache.forEach(channel => { 
         var optiontag = document.createElement(`option`);
@@ -144,7 +152,7 @@
         chatbox.appendChild(newmsg);
         newmsg.appendChild(msginner);
 
-        msginner.innerHTML = `${msg.author.tag} in #${msg.channel.name} said ${sanitizemsg(`${msg.content}`)}`;
+        msginner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
         newmsg.classList.add("messagebox");
     });
 
@@ -205,10 +213,10 @@
         <br id="chatafter" />
     </div>
     <div class="messagefooterbox">
+        <textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
         <select id="channelSelect">
             <option value="" disabled selected>Select a channel</option>
         </select>
-        <textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
         <button id="sendButton" onclick="sendMessage()">Send</button>
     </div>
 </body>
