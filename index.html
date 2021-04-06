@@ -1,299 +1,307 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Discord Bot Client</title>
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
-        body {
-            background-color: #2C2F33;
-            color: #ddd;
-            font-family: 'Ubuntu Mono', monospace;
-        }
-        .messagebox {
-            background-color: #222;
-            border-radius: 5px;
-            border-left: #555;
-        }
-        .messagebox > p {
-            padding: 2px;
-            word-wrap: break-word;
-        }
-        .errorbox {
-            background-color: rgba(220, 53, 69, 0.2);
-            border-radius: 5px;
-            border: 1px solid #dc3545;
-        }
-        #loginbox {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 40%;
-        }
-        #tokenarea {
-            display: block;
-            width: 100%;
-            resize: none;
-        }
-        #tokenarea:focus {
-            outline: none;
-        }
-        #loginButton {
-            display: inline-block;
-        }
+	<meta charset="UTF-8">
+	<title>Discord Bot Client</title>
+	<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval';" />
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap');
+		body {
+			background-color: #2C2F33;
+			color: #ddd;
+			font-family: 'Ubuntu Mono', monospace;
+		}
+		.messagebox {
+			background-color: #222;
+			border-radius: 5px;
+			border-left: #555;
+		}
+		.messagebox > p {
+			padding: 2px;
+			word-wrap: break-word;
+		}
+		.errorbox {
+			background-color: rgba(220, 53, 69, 0.2);
+			border-radius: 5px;
+			border: 1px solid #dc3545;
+		}
+		#loginbox {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			max-width: 40%;
+		}
+		#tokenarea {
+			display: block;
+			width: 100%;
+			resize: none;
+		}
+		#tokenarea:focus {
+			outline: none;
+		}
+		#loginButton {
+			display: inline-block;
+		}
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #2C2F33;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #353535;
-        }
-        #channelSelect, #messagearea, #sendButton {
-            display: none;
-        }
-        #messagefooterbox > textarea {
-            resize: none;
-        }
-        #messagefooterbox > textarea:focus, #messagefooterbox > select:focus {
-            outline: none;
-        }
-        option, #messagefooterbox > textarea, #sendButton, #channelSelect {
-            background-color: #2C2F33;
-            color: #ddd;
-        }
-        .messagefooterbox {
-            width: 98%;
-            margin: auto;
-            height: 5%;
-            display: flex;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            margin-bottom: 1%;
-        }
-        #messagearea {
-            flex-grow: 2;
-            resize: none;
-            outline: none;
-            background-color: #2C2F33;
-            color: #ddd;
-            display: none;
-            border-radius: 10px 0px 0px 10px;
-            align-self: left;
-        }
-        #channelSelect {
-            flex-grow: 2;
-            border-radius: 0px;
-            display: none;
-            align-self: center;
-            height: 100%;
-        }
-        #sendButton {
-            flex-grow: 1;
-            border-radius: 0px 10px 10px 0px;
-            display: none;
-            align-self: right;
-        }
-        *:focus {
-            outline: none;
-        }
-        #eventbox {
-            border: 2px solid #fa0;
-            width: 38%;
-            position: absolute;
-            right: 0;
-            top: 0;
-            height: 90%;
-            background-color: #2C2F33;
-            display: none;
-            margin: 1%
-        }
-        #eventbox > p {
-            padding: 2px;
-            word-wrap: break-word;
-        }
-    </style>
-    <script type="text/javascript" src="discord.11.1.0.min.js"></script>
-    <script type="text/javascript">
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-track {
+			background: #2C2F33;
+		}
+		::-webkit-scrollbar-thumb {
+			background: #333;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: #353535;
+		}
+		#channelSelect, #messagearea, #sendButton {
+			display: none;
+		}
+		#messagefooterbox > textarea {
+			resize: none;
+		}
+		#messagefooterbox > textarea:focus, #messagefooterbox > select:focus {
+			outline: none;
+		}
+		option, #messagefooterbox > textarea, #sendButton, #channelSelect {
+			background-color: #2C2F33;
+			color: #ddd;
+		}
+		.messagefooterbox {
+			width: 98%;
+			margin: auto;
+			height: 5%;
+			display: flex;
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+			margin-bottom: 1%;
+		}
+		#messagearea {
+			flex-grow: 2;
+			resize: none;
+			outline: none;
+			background-color: #2C2F33;
+			color: #ddd;
+			display: none;
+			border-radius: 10px 0px 0px 10px;
+			align-self: left;
+		}
+		#channelSelect {
+			flex-grow: 2;
+			border-radius: 0px;
+			display: none;
+			align-self: center;
+			height: 100%;
+		}
+		#guildSelect {
+			flex-grow: 2;
+			border-radius: 0px;
+			display: none;
+			align-self: center;
+			height: 100%;
+		}
+		#sendButton {
+			flex-grow: 1;
+			border-radius: 0px 10px 10px 0px;
+			display: none;
+			align-self: right;
+		}
+		*:focus {
+			outline: none;
+		}
+		#eventbox {
+			border: 2px solid #fa0;
+			width: 38%;
+			position: absolute;
+			right: 0;
+			top: 0;
+			height: 90%;
+			background-color: #2C2F33;
+			display: none;
+			margin: 1%
+		}
+		#eventbox > p {
+			padding: 2px;
+			word-wrap: break-word;
+		}
+	</style>
+	<script type="text/javascript" src="discord.11.1.0.min.js"></script>
+	<script type="text/javascript">
 
-    const Discord = require('discord.js');
-    const client = new Discord.Client();
+	const Discord = require('discord.js');
+	const client = new Discord.Client();
 
-    function sanitizemsg(str) {
-        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
-    }
+	function sanitizemsg(str) {
+		return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') ;
+	}
 
-    client.on('ready', () => {
-        var chatbox = document.getElementById('chatbox');
-        var loginnotif = document.createElement(`p`);
-        chatbox.appendChild(loginnotif);
-        loginnotif.innerHTML = `Running as ${client.user.tag}.`;
-        
-        document.getElementById("channelSelect").style.display = 'flex';
-        document.getElementById("messagearea").style.display = 'flex';
-        document.getElementById("sendButton").style.display = 'flex';
-        document.getElementById("eventbox").style.display = 'initial';
+	client.on('ready', () => {
+		var chatbox = document.getElementById('chatbox');
+		var loginnotif = document.createElement(`p`);
+		chatbox.appendChild(loginnotif);
+		loginnotif.innerHTML = `Running as ${client.user.tag}.`;
+		
+		document.getElementById("channelSelect").style.display = 'flex';
+		document.getElementById("guildSelect").style.display = 'flex';
+		document.getElementById("messagearea").style.display = 'flex';
+		document.getElementById("sendButton").style.display = 'flex';
+		document.getElementById("eventbox").style.display = 'initial';
 
-        client.channels.cache.forEach(channel => { 
-        var optiontag = document.createElement(`option`);
-        var channelSelect = document.getElementById('channelSelect');
-        channelSelect.appendChild(optiontag);
-        optiontag.value = channel.id;
-        if (channel.guild.name.length > 15) {
-            var guildname = channel.guild.name.slice(0, 15)+'...';
-        } else {
-            var guildname = channel.guild.name;
-        }
-        if (channel.name.length > 15) {
-            var channelname = channel.guild.name.slice(0, 15)+'...';
-        } else {
-            var channelname = channel.name;
-        }
-        optiontag.innerHTML = `${guildname} - #${channelname}`;
-    });
-    });
+		client.guilds.cache.forEach(guild => {
+			var optiontag = document.createElement(`option`);
+			var guildSelect = document.getElementById('guildSelect');
+			guildSelect.appendChild(optiontag);
+			optiontag.value = guild.id;
+			guildname = guild.name;
+			optiontag.innerHTML = `${guildname}`;
+		});
+	});
+	function changeGuild() {
+		guild = client.guilds.cache.get(document.getElementById('guildSelect').value);
+		var channelSelect = document.getElementById('channelSelect');
+		channelSelect.innerHTML = '';
+		guild.channels.cache.forEach(channel => { 
+			var optiontag = document.createElement(`option`);
+			channelSelect.appendChild(optiontag);
+			optiontag.value = channel.id;
+			guildname = channel.guild.name;
+			var channelname = channel.name;
+			optiontag.innerHTML = `#${channelname}`;
+		});
+	}
 
-    client.on('message', msg => {
-        console.log(`#${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
+	client.on('message', msg => {
+		console.log(`#${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
 
-        var newmsg = document.createElement(`div`);
-        var msginner = document.createElement(`p`);
-        var chatbox = document.getElementById('chatbox');
-        chatbox.appendChild(newmsg);
-        newmsg.appendChild(msginner);
+		var newmsg = document.createElement(`div`);
+		var msginner = document.createElement(`p`);
+		var chatbox = document.getElementById('chatbox');
+		chatbox.appendChild(newmsg);
+		newmsg.appendChild(msginner);
 
-        msginner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
-        newmsg.classList.add("messagebox");
-    });
-    var arynserver = client.guilds.cache.get("816389341504077845");
-    var arynrole = arynserver.roles.cache.find(role => role.name === "not me");
-    bot.on('guildMemberAdd', member => {
-        if (member.guild === arynserver)
-        member.guild.channels.get('818663744648773682').send(`joining was a stupid move tbh @${member.tag}`);
-        member.roles.add(arynrole);
-    });
+		msginner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
+		newmsg.classList.add("messagebox");
+	});
 
-    client.commands = new Discord.Collection();
-    const clientCommands = require('./commands');
-    
-    Object.keys(clientCommands).map(key => {
-      client.commands.set(clientCommands[key].name, clientCommands[key]);
-    });
+	client.commands = new Discord.Collection();
+	const clientCommands = require('./commands');
+	
+	Object.keys(clientCommands).map(key => {
+	  client.commands.set(clientCommands[key].name, clientCommands[key]);
+	});
 
-    function eventOut(message) {
-        var newevent = document.createElement(`div`);
-        var eventinner = document.createElement(`p`);
-        var eventbox = document.getElementById('eventbox');
-        eventbox.appendChild(newevent);
-        newevent.appendChild(eventinner);
-        eventinner.innerHTML = `(Self) Out: ${message}`;
-        newevent.classList.add("event");
-    }
+	function eventOut(message) {
+		var newevent = document.createElement(`div`);
+		var eventinner = document.createElement(`p`);
+		var eventbox = document.getElementById('eventbox');
+		eventbox.appendChild(newevent);
+		newevent.appendChild(eventinner);
+		eventinner.innerHTML = `(Self) Out: ${message}`;
+		newevent.classList.add("event");
+	}
 
-    client.on('message', msg => {
-        //SECONDARY
-        //event handler, calls command handler
-        if (msg.content.startsWith('.')) {
-            console.log(`Command: #${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
+	client.on('message', msg => {
+		//SECONDARY
+		//event handler, calls command handler
+		if (msg.content.startsWith('.')) {
+			console.log(`Command: #${msg.channel.name}=${msg.author.tag}: ${msg.content}`);
 
-            var newevent = document.createElement(`div`);
-            var eventinner = document.createElement(`p`);
-            var eventbox = document.getElementById('eventbox');
-            eventbox.appendChild(newevent);
-            newevent.appendChild(eventinner);
+			var newevent = document.createElement(`div`);
+			var eventinner = document.createElement(`p`);
+			var eventbox = document.getElementById('eventbox');
+			eventbox.appendChild(newevent);
+			newevent.appendChild(eventinner);
 
-            eventinner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
-            newevent.classList.add("event");
-            
-            const args = msg.content.split(/ +/);
-            const command = args.shift().toLowerCase();
+			eventinner.innerHTML = `${msg.author.tag}--#${msg.channel.name}: ${sanitizemsg(`${msg.content}`)}`;
+			newevent.classList.add("event");
+			
+			const args = msg.content.split(/ +/);
+			const command = args.shift().toLowerCase();
 
-            if (!client.commands.has(command)) return;
+			if (!client.commands.has(command)) return;
 
-            try {
-              client.commands.get(command).execute(msg, args, client);
-            } catch (error) {
-              console.error(error);
-              msg.channel.send('https://stuff.aryn.dev/error.gif');
-            }
-        }
-    })
+			try {
+			  client.commands.get(command).execute(msg, args, client);
+			} catch (error) {
+			  console.error(error);
+			  msg.channel.send('https://stuff.aryn.dev/error.gif');
+			}
+		}
+	})
 
-    
-    window.addEventListener("error", function (err) {
-        var newevent = document.createElement(`div`);
-        var eventinner = document.createElement(`p`);
-        var eventbox = document.getElementById('eventbox');
-        eventbox.appendChild(newevent);
-        newevent.appendChild(eventinner);
+	
+	window.addEventListener("error", function (err) {
+		var newevent = document.createElement(`div`);
+		var eventinner = document.createElement(`p`);
+		var eventbox = document.getElementById('eventbox');
+		eventbox.appendChild(newevent);
+		newevent.appendChild(eventinner);
 
-        eventinner.innerHTML = err.error.message;
-        newevent.classList.add("errorbox");
-    })
-    window.addEventListener('unhandledrejection', function (err) {
-        var newevent = document.createElement(`div`);
-        var eventinner = document.createElement(`p`);
-        var eventbox = document.getElementById('eventbox');
-        eventbox.appendChild(newevent);
-        newevent.appendChild(eventinner);
+		eventinner.innerHTML = err.error.message;
+		newevent.classList.add("errorbox");
+	})
+	window.addEventListener('unhandledrejection', function (err) {
+		var newevent = document.createElement(`div`);
+		var eventinner = document.createElement(`p`);
+		var eventbox = document.getElementById('eventbox');
+		eventbox.appendChild(newevent);
+		newevent.appendChild(eventinner);
 
-        eventinner.innerHTML = err.reason.message;
-        newevent.classList.add("errorbox");
-    })
+		eventinner.innerHTML = err.reason.message;
+		newevent.classList.add("errorbox");
+	})
 
-    function loginClient() {
-        if (!document.getElementById("tokenarea").value) {
-            return;
-        } else {
-            var token = document.getElementById("tokenarea").value;
-            client.login(token);
-            document.getElementById("loginbox").style.display = 'none';
-        }
-    }
+	function loginClient() {
+		if (!document.getElementById("tokenarea").value) {
+			return;
+		} else {
+			var token = document.getElementById("tokenarea").value;
+			client.login(token);
+			document.getElementById("loginbox").style.display = 'none';
+		}
+	}
 
-    function sendMessage() {
-        if (document.getElementById("channelSelect").value == "") { return false; }
-        client.channels.cache.get(`${document.getElementById("channelSelect").value}`).send(`${document.getElementById("messagearea").value}`);
-        console.log(`Sending ${document.getElementById("messagearea").value}`);
-        document.getElementById("messagearea").value = "";
-    };
+	function sendMessage() {
+		if (document.getElementById("channelSelect").value == "") { return false; }
+		client.channels.cache.get(`${document.getElementById("channelSelect").value}`).send(`${document.getElementById("messagearea").value}`);
+		console.log(`Sending ${document.getElementById("messagearea").value}`);
+		document.getElementById("messagearea").value = "";
+	};
 
-    var messagearea = document.getElementById("messagearea");
-    function sendMessageCheck() {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            sendMessage()
-        };
-    };
-    </script>
+	var messagearea = document.getElementById("messagearea");
+	function sendMessageCheck() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			sendMessage()
+		};
+	};
+	</script>
 </head>
 <body>
-    <div id="loginbox">
-    <textarea id="tokenarea" rows="1"></textarea>
-    <button id="loginButton" onclick="loginClient()">Login</button>
-    </div>
-    <div id="chatbox">
-        <br id="chatafter" />
-    </div>
-    <div class="messagefooterbox">
-        <textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
-        <select id="channelSelect">
-            <option value="" disabled selected>Select a channel</option>
-        </select>
-        <button id="sendButton" onclick="sendMessage()">Send</button>
-    </div>
-    <div id="eventbox">
+	<div id="loginbox">
+	<textarea id="tokenarea" rows="1"></textarea>
+	<button id="loginButton" onclick="loginClient()">Login</button>
+	</div>
+	<div id="chatbox">
+		<br id="chatafter" />
+	</div>
+	<div class="messagefooterbox">
+		<textarea id="messagearea" rows="1" onkeyup="sendMessageCheck()"></textarea>
+		<select id="guildSelect" onchange="changeGuild()">
+			<option value="" disabled selected>Select a guild</option>
+		</select>
+		<select id="channelSelect">
+			<option value="" disabled selected>Select a channel</option>
+		</select>
+		<button id="sendButton" onclick="sendMessage()">Send</button>
+	</div>
+	<div id="eventbox">
 
-    </div>
+	</div>
 </body>
 </html>
