@@ -1,11 +1,9 @@
-https://aryn.dev
+# bot-client
+A discord client to interact as a bot user.
 
 ### A better client
 https://github.com/SebOuellette/LiveBot
 this one is just better in every way. they even have a better README. go check it out.
-
-# bot-client
-A discord client to interact as a bot user.
 
 ### Compiled releases
 Compiled releases are no longer available due to issues with maintaining them.
