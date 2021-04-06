@@ -22,5 +22,5 @@ These commands are platform-independent, the program will be built for the host 
 ### TODO
 - [ ] New message layout
 	- [ ] Profile pictures on messages
-- [ ] Clickable member info pages
-- [ ] Clickable channels to change to that channel
+	- [ ] Clickable member info pages
+	- [ ] Clickable channels to change to that channel
