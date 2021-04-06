@@ -18,3 +18,9 @@ npm i
 npm run make
 ```
 These commands are platform-independent, the program will be built for the host platform.
+
+### TODO
+- [ ] New message layout
+	- [ ] Profile pictures on messages
+- [ ] Clickable member info pages
+- [ ] Clickable channels to change to that channel
